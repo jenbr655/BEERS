@@ -22,7 +22,7 @@ function varargout = myCameraGUI2(varargin)
 
 % Edit the above text to modify the response to help myCameraGUI2
 
-% Last Modified by GUIDE v2.5 12-Oct-2020 13:24:32
+% Last Modified by GUIDE v2.5 13-Oct-2020 22:58:09
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -123,11 +123,22 @@ function captureImage_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%EGET%%%%%%
+%load('testframe.mat')
+%var=frame
 % frame = getsnapshot(handles.video);
 frame = get(get(handles.cameraAxes,'children'),'cdata'); % The current displayed frame
 %t=datetime('now');
 %save(sprintf('test%d , t' , 'frame');
-save('testframe.mat', 'frame');
+name = get(handles.name, 'String');
+if (isempty(name))
+    name = 'anonymous';
+end
+mkdir(name);
+save('name/testframe.mat', 'frame');
+%setappdata(handles.pictureAxes, 'newest', frame)
+
+axes(handles.pictureAxes) %Går in till picture axes, sätter som aktiv (figure)
+imshow(frame)
 
 disp('Frame saved to file ''testframe.mat''');
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -175,11 +186,15 @@ delete(imaqfind);
 
 % --- Executes during object creation, after setting all properties.
 function pictureAxes_CreateFcn(hObject, eventdata, handles)
+%load('testframe.mat')
+%var=frame
 % hObject    handle to pictureAxes (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    empty - handles not created until after all CreateFcns called
-load('testframe.mat');
-imshow(frame)
+%load('testframe.mat');
+%imshow(frame)
+%newest = getappdata(hObject, 'newest')
+%imshow(newest)
 % Hint: place code in OpeningFcn to populate pictureAxes
 
 
@@ -243,3 +258,17 @@ function name_CreateFcn(hObject, eventdata, handles)
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
     set(hObject,'BackgroundColor','white');
 end
+
+
+% --- Executes on key press with focus on name and none of its controls.
+function name_KeyPressFcn(hObject, eventdata, handles)
+% hObject    handle to name (see GCBO)
+% eventdata  structure with the following fields (see MATLAB.UI.CONTROL.UICONTROL)
+%	Key: name of the key that was pressed, in lower case
+%	Character: character interpretation of the key(s) that was pressed
+%	Modifier: name(s) of the modifier key(s) (i.e., control, shift) pressed
+% handles    structure with handles and user data (see GUIDATA)
+%if strcmpi(eventdata.Key, 'return')
+ %   setappdata(hObject, 'name', get(hObject, 'String'))
+%end
+%x = getappdata(hObject, 'name')
