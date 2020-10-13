@@ -1,5 +1,5 @@
 close all
-im = imread('Snap_004.jpg');
+im = imread('medpol.jpg');
 im = rgb2gray(im);
 im = imresize(im, 0.5);
 
