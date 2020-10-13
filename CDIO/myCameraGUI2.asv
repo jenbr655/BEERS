@@ -1,4 +1,5 @@
 function varargout = myCameraGUI2(varargin)
+ global Global_pic; 
 % MYCAMERAGUI2 MATLAB code for myCameraGUI2.fig
 %      MYCAMERAGUI2, by itself, creates a new MYCAMERAGUI2 or raises the existing
 %      singleton*.
@@ -128,7 +129,6 @@ frame = get(get(handles.cameraAxes,'children'),'cdata'); % The current displayed
 %t=datetime('now');
 %save(sprintf('test%d , t' , 'frame');
 save('testframe.mat', 'frame');
-
 disp('Frame saved to file ''testframe.mat''');
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -178,6 +178,8 @@ function pictureAxes_CreateFcn(hObject, eventdata, handles)
 % hObject    handle to pictureAxes (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    empty - handles not created until after all CreateFcns called
+
+
 load('testframe.mat');
 imshow(frame)
 % Hint: place code in OpeningFcn to populate pictureAxes
