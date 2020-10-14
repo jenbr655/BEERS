@@ -3,9 +3,9 @@ clear a;
 
 a=arduino('COM4', 'Uno','Libraries', 'Adafruit/NeoPixel')
 neostrip=addon(a,'Adafruit/NeoPixel', 'D6', 12)
-neostrip.Brightness=0.8;
-writeColor(neostrip, 1:12, 'yellow');
 
+%writeColor(neostrip, 1:12, 'Green');
+writeColor(neostrip, 
 
-
+neostrip.Brightness=0.5;
 
