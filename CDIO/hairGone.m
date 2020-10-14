@@ -30,3 +30,6 @@ figure
 subplot(121),imagesc(im_gauss), colormap(gray(256)),colorbar
 subplot(122), imagesc(im)
 
+%%
+interpol = interp(im_gauss)
+

@@ -1,5 +1,5 @@
 function varargout = myCameraGUI2(varargin)
- 
+
 % MYCAMERAGUI2 MATLAB code for myCameraGUI2.fig
 %      MYCAMERAGUI2, by itself, creates a new MYCAMERAGUI2 or raises the existing
 %      singleton*.
@@ -125,9 +125,16 @@ function captureImage_Callback(hObject, eventdata, handles)
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%EGET%%%%%%
 % frame = getsnapshot(handles.video);
+
 frame = get(get(handles.cameraAxes,'children'),'cdata'); % The current displayed frame
+%t=datetime('now');
+%DateString = datestr(t);
+%save(sprintf('test%d',t , 'frame'));
+%imwrite(frame,'C:\Users\marti\OneDrive\Skrivbord\BEERS\CDIO\Pics',png)
+
 save('testframe.mat', 'frame');
 disp('Frame saved to file ''testframe.mat''');
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
@@ -176,13 +183,11 @@ function pictureAxes_CreateFcn(hObject, eventdata, handles)
 % hObject    handle to pictureAxes (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    empty - handles not created until after all CreateFcns called
-
-
 load('testframe.mat');
 imshow(frame)
+
+
 % Hint: place code in OpeningFcn to populate pictureAxes
-
-
 % --- Executes during object creation, after setting all properties.
 function text2_CreateFcn(hObject, eventdata, handles)
 % hObject    handle to text2 (see GCBO)
