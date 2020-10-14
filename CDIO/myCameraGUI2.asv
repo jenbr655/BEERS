@@ -126,31 +126,18 @@ function captureImage_Callback(hObject, eventdata, handles)
 %load('testframe.mat')
 %var=frame
 % frame = getsnapshot(handles.video);
-
 frame = get(get(handles.cameraAxes,'children'),'cdata'); % The current displayed frame
 %t=datetime('now');
-
-%DateString = datestr(t);
-%save(sprintf('test%d',t , 'frame'));
-%imwrite(frame,'C:\Users\marti\OneDrive\Skrivbord\BEERS\CDIO\Pics',png)
-
-save('testframe.mat', 'frame');
-
 %save(sprintf('test%d , t' , 'frame');
-name = get(handles.name, 'String');
-if (isempty(name))
-    name = 'anonymous';
-end
-mkdir(name);
-save('name/testframe.mat', 'frame');
+name = getappdata(handles.name, 'name');
+if
+save('/testframe.mat', 'frame');
 %setappdata(handles.pictureAxes, 'newest', frame)
 
 axes(handles.pictureAxes) %Går in till picture axes, sätter som aktiv (figure)
 imshow(frame)
 
-
 disp('Frame saved to file ''testframe.mat''');
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
@@ -201,9 +188,6 @@ function pictureAxes_CreateFcn(hObject, eventdata, handles)
 % hObject    handle to pictureAxes (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    empty - handles not created until after all CreateFcns called
-
-load('testframe.mat');
-imshow(frame)
 %load('testframe.mat');
 %imshow(frame)
 %newest = getappdata(hObject, 'newest')
@@ -211,8 +195,6 @@ imshow(frame)
 % Hint: place code in OpeningFcn to populate pictureAxes
 
 
-
-% Hint: place code in OpeningFcn to populate pictureAxes
 % --- Executes during object creation, after setting all properties.
 function text2_CreateFcn(hObject, eventdata, handles)
 % hObject    handle to text2 (see GCBO)
@@ -283,7 +265,4 @@ function name_KeyPressFcn(hObject, eventdata, handles)
 %	Character: character interpretation of the key(s) that was pressed
 %	Modifier: name(s) of the modifier key(s) (i.e., control, shift) pressed
 % handles    structure with handles and user data (see GUIDATA)
-%if strcmpi(eventdata.Key, 'return')
- %   setappdata(hObject, 'name', get(hObject, 'String'))
-%end
-%x = getappdata(hObject, 'name')
+setappdata(hObject, 'name', get(hObject, 'String'))

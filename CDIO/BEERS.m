@@ -4,3 +4,7 @@ myCameraGUI2
 
 myCameraGUI2
 end
+
+ myCameraGUI2
+ 
+
