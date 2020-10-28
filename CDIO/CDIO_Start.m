@@ -1,5 +1,5 @@
 close all
-im = imread('medpol.jpg');
+im = imread('Snap_002.jpg');
 im = rgb2gray(im);
 im = imresize(im, 0.5);
 
@@ -30,7 +30,7 @@ BWfill = imfill(BW,'holes');
 figure
 imagesc(im), colorbar
 %%
-%Binärbilder
+%Binï¿½rbilder
 figure
 subplot(221),imshow(imbin)
 subplot(222),imshow(imO)

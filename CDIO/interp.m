@@ -15,8 +15,8 @@ for j = 1:length(idx)
     [x, y] = pol2cart(theta,R);
     x = x + xff;
     y = y + yff;
-    y(y == 0) = 1; %Indexeringskäl senare
-    x(x == 0) = 1; %Indexeringskäl senare
+    y(y == 0) = 1; %Indexeringskï¿½l senare
+    x(x == 0) = 1; %Indexeringskï¿½l senare
 %         figure(123), imagesc(im), hold on
 %         plot(x,y)
 %         %plot(xff,yff, 'LineWidth',4)

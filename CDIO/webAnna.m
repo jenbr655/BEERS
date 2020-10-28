@@ -6,7 +6,7 @@ preview(cam)
 
 %Behöver lägga in i gui_t här när den ska ta bilden. Typ loop/paus tills
 %man trycker på knapp. 
-pause(10);
+pause(15);
 img=snapshot(cam);
 img_gray=rgb2gray(img);
 
