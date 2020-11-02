@@ -1,4 +1,5 @@
-function varargout = myCameraGUI2(varargin)
+
+function varargout = myCameraGUI2new(varargin)
 % MYCAMERAGUI2 MATLAB code for myCameraGUI2.fig
 %      MYCAMERAGUI2, by itself, creates a new MYCAMERAGUI2 or raises the existing
 %      singleton*.
@@ -130,26 +131,26 @@ function captureImage_Callback(hObject, eventdata, handles)
 frame = get(get(handles.cameraAxes,'children'),'cdata'); % The current displayed frame
 %t=datetime('now');
 
-DateString = datestr(now, 30);
+%DateString = datestr(t);
 %save(sprintf('test%d',t , 'frame'));
 %imwrite(frame,'C:\Users\marti\OneDrive\Skrivbord\BEERS\CDIO\Pics',png)
 
-%save('testframe.mat', 'frame');
+save('testframe.mat', 'frame');
 
 %save(sprintf('test%d , t' , 'frame');
 name = get(handles.name, 'String');
-if (isempty(name)||strcmp(name,'Name'))
+if (isempty(name))
     name = 'anonymous';
 end
 mkdir(name);
-save(name + "/" + DateString + ".mat", 'frame');
+save('name/testframe.mat', 'frame');
 %setappdata(handles.pictureAxes, 'newest', frame)
 
 axes(handles.pictureAxes) %G�r in till picture axes, s�tter som aktiv (figure)
 imshow(frame)
 
 
-disp("Frame saved to file: " + name + "/" + DateString + ".mat");
+disp('Frame saved to file ''testframe.mat''');
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
