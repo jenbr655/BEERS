@@ -1,6 +1,6 @@
 close all
 
-im = imread('Snap_004.tif');
+im = imread('Snap_004.jpg');
 im = rgb2gray(im);
 %im = imresize(im, 0.5);
 
@@ -34,15 +34,17 @@ im(hairsbin > 0) = mean(mean(im_gauss));
 % subplot(122), imagesc(im)
 
 %%
-figure
-imagesc(im)
+% figure
+% imagesc(im)
 
 idx = find(hairsbin > 0);
-interpol = interp(im,idx);
-%intpol2 = interp2(im,idx);
+%interpol = interp(im,idx);  %Hittar idx i originalbilden och sätter till medelvärde av omkringliggande pixlar
+interpol = interp2(im,idx);
 
 figure
 imagesc(interpol)
+
+%%
 
 T = graythresh(interpol);
 imbin = imbinarize(interpol,T);

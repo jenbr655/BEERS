@@ -1,7 +1,7 @@
 close all
-im = imread('medpol.jpg');
+im = imread('Snap_004.jpg');
 im = rgb2gray(im);
-im = imresize(im, 0.5);
+%im = imresize(im, 0.5);
 
 binvect = 0:1:255;
 histo = hist(im(:), binvect);
