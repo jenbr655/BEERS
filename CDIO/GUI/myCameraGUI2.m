@@ -241,6 +241,8 @@ function ok_Callback(hObject, eventdata, handles)
 % --- Executes on button press in quit.
 function quit_Callback(hObject, eventdata, handles)
 closereq();
+delete(webcam('USB 2760 Camera'))
+
 % hObject    handle to quit (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
