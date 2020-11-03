@@ -157,22 +157,28 @@ function text2_CreateFcn(hObject, eventdata, handles)
 % handles    empty - handles not created until after all CreateFcns called
 
 
-% --- Executes on selection change in popupmenu1.
-function popupmenu1_Callback(hObject, eventdata, handles)
+% --- Executes on selection change in zoommenu.
+function zoommenu_Callback(hObject, eventdata, handles)
 
-% hObject    handle to popupmenu1 (see GCBO)
+% hObject    handle to zoommenu (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-
-% Hints: contents = cellstr(get(hObject,'String')) returns popupmenu1 contents as cell array
-%        contents{get(hObject,'Value')} returns selected item from popupmenu1
+contents= get(hObject, 'String');
+chosen_zoom = contents{get(hObject, 'Value')};
+% Hints: contents = cellstr(get(hObject,'String')) returns zoommenu contents as cell array
+%        contents{get(hObject,'Value')} returns selected item from zoommenu
 
 
 % --- Executes during object creation, after setting all properties.
-function popupmenu1_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to popupmenu1 (see GCBO)
+function zoommenu_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to zoommenu (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    empty - handles not created until after all CreateFcns called
+
+
+
+%zoom = get(handles.zoommenu, 'string')
+
 
 % Hint: popupmenu controls usually have a white background on Windows.
 %       See ISPC and COMPUTER.
@@ -296,13 +302,22 @@ Startmenu
 % --- Executes on button press in acquisition.
 function acquisition_Callback(hObject, eventdata, handles)
 %%%%%%%%%%%%%%%%%%%%%%%%%%AREA%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+choise = get(handles.popupmenuband,'Value'); %get selected band
+switch choise
+     case 1
+       % plot alpha
+     case 2
+       %plot beta
+     case 3 
+       %plot gamma
+      %(etcetera)
+  end
+
+
 s = load('current_pic.mat');
 imwrite(s.frame, 'current_pic.jpg');
-hairGone
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%a = evalin('base','BWfill');
-%area = area_calc(a);
-%set(handles.molesizeval, 'string',a);
+a = area_calc(Seg_mole(), 1); %Area_calc räknar ut arean (i pixlar) från den binära bilden som fås från hairGone.
+set(handles.molesizeval, 'string',a);
 
 
 %=3;

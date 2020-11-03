@@ -157,22 +157,28 @@ function text2_CreateFcn(hObject, eventdata, handles)
 % handles    empty - handles not created until after all CreateFcns called
 
 
-% --- Executes on selection change in popupmenu1.
-function popupmenu1_Callback(hObject, eventdata, handles)
+% --- Executes on selection change in zoommenu.
+function zoommenu_Callback(hObject, eventdata, handles)
 
-% hObject    handle to popupmenu1 (see GCBO)
+% hObject    handle to zoommenu (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-
-% Hints: contents = cellstr(get(hObject,'String')) returns popupmenu1 contents as cell array
-%        contents{get(hObject,'Value')} returns selected item from popupmenu1
+contents= get(hObject, 'String');
+chosen_zoom = contents{get(hObject, 'Value')};
+% Hints: contents = cellstr(get(hObject,'String')) returns zoommenu contents as cell array
+%        contents{get(hObject,'Value')} returns selected item from zoommenu
 
 
 % --- Executes during object creation, after setting all properties.
-function popupmenu1_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to popupmenu1 (see GCBO)
+function zoommenu_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to zoommenu (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    empty - handles not created until after all CreateFcns called
+
+
+
+%zoom = get(handles.zoommenu, 'string')
+
 
 % Hint: popupmenu controls usually have a white background on Windows.
 %       See ISPC and COMPUTER.
@@ -296,9 +302,36 @@ Startmenu
 % --- Executes on button press in acquisition.
 function acquisition_Callback(hObject, eventdata, handles)
 %%%%%%%%%%%%%%%%%%%%%%%%%%AREA%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%s = load('current_pic.mat');
-%imwrite(s.frame, 'current_pic.jpg');
-a = area_calc(hairGone()); %Area_calc räknar ut arean (i pixlar) från den binära bilden som fås från hairGone.
+choise = get(handles.zoommenu,'Value'); %get selected band
+zoom=0; %Initialize zoom-parameter
+switch choise
+     case 1
+       disp('You got no ZOOM')
+     case 2
+       zoom=1;
+     case 3 
+      zoom=2;
+      case 4 
+      zoom=3;
+      case 5 
+      zoom=4;
+      case 6
+      zoom=5;
+      case 7 
+      zoom=6;
+      case 8 
+      zoom=7;
+      case 9 
+      zoom=8;
+      case 10
+      zoom=9;
+      case 11 
+      zoom=10;
+  end
+zoom
+s = load('current_pic.mat');
+imwrite(s.frame, 'current_pic.jpg');
+a = area_calc(Seg_mole(), zoom); %Area_calc räknar ut arean (i pixlar) från den binära bilden som fås från hairGone.
 set(handles.molesizeval, 'string',a);
 
 
