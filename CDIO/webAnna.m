@@ -6,13 +6,14 @@ preview(cam)
 
 %Behöver lägga in i gui_t här när den ska ta bilden. Typ loop/paus tills
 %man trycker på knapp. 
-pause(15);
+pause(10);
 img=snapshot(cam);
 img_gray=rgb2gray(img);
+im = imresize(img_gray, 0.5);
 
 figure(13)
 subplot(131)
-imshow(img)
+imshow(im)
 subplot(132)
 imshow(img_gray)
 
