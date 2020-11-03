@@ -36,14 +36,14 @@ imbin = ~imbin; %Change white to black and vice versa
 
 %Closing and opening algorithm for removal of hairs
 se = strel('disk',4);
-imC = imclose(imbin, se); %Performs closing
-imO = imopen(imC,se); %Performs opening
+imC = imclose(imbin, se);
+imO = imopen(imC,se);
 for i = 1:4
 imO = imerode(imO,se);
 %imO = imdilate(imO,se);
 end
 
-BW = bwareaopen(imO,10); %Removes objects that have connections fewer than 1000 pixels
+BW = bwareaopen(imO,1000); %Removes objects that have connections fewer than 1000 pixels
 BWfill = imfill(BW,'holes'); %Fills holes 
 
 
