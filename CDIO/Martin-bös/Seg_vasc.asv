@@ -26,6 +26,34 @@ im = im/max(max(im)); %Graythresh assumes value/takes values between [0 1]
 %f = fftshift(ifft2(ifftshift(F)));
 
 %% Circular convolution
+tmp_im = [im(:,size(im,2)/2:-1:1) im im(:,size(im,2):-1:65)];
+imextend = [tmp_im(size(im,1)/2:-1:1,:); tmp_im; tmp_im(size(im,1):-1:65,:)];
+
+imagesc(imextend)
+
+sigma = 2;
+lpH=exp(-0.5*([-319/2:319/2]/sigma).^2); 
+lpH=lpH/sum(lpH); %Horizontal filter 
+lpV=exp(-0.5*([-239/2:239/2]/sigma).^2)'; %Vertical filter
+gauss = conv2(lpV,lpH,'full'); %Gaussian filter
+
+gausskern =0*im; %Array of zeros
+%center = size(im,1)/2+1;
+[row,col] = size(im);
+
+centerx = row/2; %Center row
+centery = col/2; %Center column
+
+gausskern(centerx-3:centerx+3, centery-3:centery+3) = gauss; %Centering Gaussian filter in the image before transform 
+IM = fftshift(fft2(ifftshift(im))); %Fourier transform of im
+GAUSSKERN = fftshift(fft2(ifftshift(gausskern))); %Fourier transorm of averageing kernel
+AVERIM = IM.*GAUSSKERN; %Filtering in the fourier domain => averaged image
+averim = real(fftshift(ifft2(ifftshift(AVERIM)))); %Filtered image
+
+
+
+%%
+
 sigma = 2;
 lpH=exp(-0.5*([-3:3]/sigma).^2); 
 lpH=lpH/sum(lpH); %Horizontal filter 
@@ -45,9 +73,9 @@ GAUSSKERN = fftshift(fft2(ifftshift(gausskern))); %Fourier transorm of averagein
 AVERIM = IM.*GAUSSKERN; %Filtering in the fourier domain => averaged image
 averim = real(fftshift(ifft2(ifftshift(AVERIM)))); %Filtered image
 
-figure
-subplot(121),imagesc(im), colorbar
-subplot(122),imagesc(averim), colorbar
+% figure
+% subplot(121),imagesc(im), colorbar
+% subplot(122),imagesc(averim), colorbar
 
 %% Vascular detection
 
