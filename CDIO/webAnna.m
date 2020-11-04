@@ -11,11 +11,15 @@ img=snapshot(cam);
 img_gray=rgb2gray(img);
 im = imresize(img_gray, 0.5);
 
+
 figure(13)
-subplot(131)
 imshow(im)
-subplot(132)
-imshow(img_gray)
+
+% figure(13)
+% subplot(131)
+% imshow(im)
+% subplot(132)
+% imshow(img_gray)
 
 %% Segmentation
 

@@ -46,6 +46,8 @@ imHeight=480;
 axes(handles.cameraAxes);
 hImage=image(zeros(imHeight,imWidth,3),'Parent',handles.cameraAxes);
 preview(cam,hImage)
+DateString = datestr(now, 23);
+set(handles.dateTimeEdit, 'string',DateString);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -109,9 +111,15 @@ name = get(handles.name, 'String');
 if (isempty(name)||strcmp(name,'Enter name...'))
     name = 'anonymous';
 end
+base = 'C:\Users\marhu961\Desktop\BEERS\CDIO\GUI\SAVEDIMAGES';   % Assumed to be existing
+cd(base);
+%mkdir('A');         % C:\Temp\A created
+
+
 mkdir(name);
 save(name + "/" + DateString + ".mat", 'frame');
 %setappdata(handles.pictureAxes, 'newest', frame)
+cd('C:\Users\marhu961\Desktop\BEERS\CDIO\GUI')
 
 axes(handles.pictureAxes) %G�r in till picture axes, s�tter som aktiv (figure)
 imshow(frame)
@@ -233,6 +241,12 @@ function name_KeyPressFcn(hObject, eventdata, handles)
 
 % --- Executes on button press in ok.
 function ok_Callback(hObject, eventdata, handles)
+name = get(handles.name, 'String');
+set(handles.editName, 'string',name);
+
+
+
+
 % hObject    handle to ok (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
@@ -241,6 +255,8 @@ function ok_Callback(hObject, eventdata, handles)
 % --- Executes on button press in quit.
 function quit_Callback(hObject, eventdata, handles)
 closereq();
+delete(webcam('USB 2760 Camera'))
+
 % hObject    handle to quit (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
@@ -326,12 +342,20 @@ switch choise
       case 10
       zoom=9;
       case 11 
+      zoom=9.5;
+      case 12
       zoom=10;
-  end
-zoom
-s = load('current_pic.mat');
+    end
+disp(zoom)
+ s = load('current_pic.mat');
 imwrite(s.frame, 'current_pic.jpg');
+
 a = area_calc(Seg_mole(), zoom); %Area_calc räknar ut arean (i pixlar) från den binära bilden som fås från hairGone.
+
+axes(handles.pictureAxes)
+pic=imread('boundary_pic.jpg');
+imshow(pic);
+
 set(handles.molesizeval, 'string',a);
 
 
@@ -340,3 +364,74 @@ set(handles.molesizeval, 'string',a);
 % hObject    handle to acquisition (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
+
+
+
+function editName_Callback(hObject, eventdata, handles)
+
+
+% hObject    handle to editName (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of editName as text
+%        str2double(get(hObject,'String')) returns contents of editName as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function editName_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to editName (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+
+function dateTimeEdit_Callback(hObject, eventdata, handles)
+% hObject    handle to dateTimeEdit (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of dateTimeEdit as text
+%        str2double(get(hObject,'String')) returns contents of dateTimeEdit as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function dateTimeEdit_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to dateTimeEdit (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+
+function RoundnessEdit_Callback(hObject, eventdata, handles)
+% hObject    handle to RoundnessEdit (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of RoundnessEdit as text
+%        str2double(get(hObject,'String')) returns contents of RoundnessEdit as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function RoundnessEdit_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to RoundnessEdit (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
