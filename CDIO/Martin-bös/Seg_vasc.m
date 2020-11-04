@@ -1,9 +1,9 @@
 close all
-im = imread('amandasunderarm.jpg');
+im = imread('annasnagelband.jpg');
 im = rgb2gray(im);
 im = imresize(im, 0.5);
 im = double(im);
-im = im/max(max(im)); %Graythresh assumes value/takes values between [0 1]
+%im = im/max(max(im)); %Graythresh assumes value/takes values between [0 1]
 
 %% Transform commands
 %fftshift: Shift zero-frequency component to center of spectrum.
@@ -45,10 +45,36 @@ GAUSSKERN = fftshift(fft2(ifftshift(gausskern))); %Fourier transorm of averagein
 AVERIM = IM.*GAUSSKERN; %Filtering in the fourier domain => averaged image
 averim = real(fftshift(ifft2(ifftshift(AVERIM)))); %Filtered image
 
-figure
+figure, colormap(gray(256))
 subplot(121),imagesc(im), colorbar
 subplot(122),imagesc(averim), colorbar
 
+im_eq = hist_eq(im)/max(max(im));
+
+% figure
+% imshow(im_eq)
+
+
 %% Vascular detection
+
+%T = graythresh(im);
+T = midway(im); %Threshold using the midway method
+T_le = le(im,T); %Threshold using the least error method
+
+imbin = imbinarize(im,T_le);
+imbin = ~imbin;
+
+figure
+imagesc(imbin)
+
+
+
+
+
+
+
+
+
+
 
 
