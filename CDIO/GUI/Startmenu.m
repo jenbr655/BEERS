@@ -22,7 +22,7 @@ function varargout = Startmenu(varargin)
 
 % Edit the above text to modify the response to help Startmenu
 
-% Last Modified by GUIDE v2.5 02-Nov-2020 14:22:52
+% Last Modified by GUIDE v2.5 04-Nov-2020 14:00:22
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -107,5 +107,13 @@ closereq();
 function startvessel_Callback(hObject, eventdata, handles)
 vesselGUI
 % hObject    handle to startvessel (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+
+% --- Executes on button press in history.
+function history_Callback(hObject, eventdata, handles)
+History
+% hObject    handle to history (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)

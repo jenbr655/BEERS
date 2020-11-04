@@ -103,10 +103,7 @@ function captureImage_Callback(hObject, eventdata, handles)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%EGET%%%%%%
 
 frame = get(get(handles.cameraAxes,'children'),'cdata'); % The current displayed frame
-
-
 DateString = datestr(now, 30);
-
 name = get(handles.name, 'String');
 if (isempty(name)||strcmp(name,'Enter name...'))
     name = 'anonymous';
