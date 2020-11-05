@@ -1,4 +1,4 @@
-function T = midway(im)
+function [T,T1,T2] = midway(im)
 
 binvect = 0:1:255;
 histo = hist(im(:),binvect);
