@@ -62,9 +62,9 @@ imshow(J)
 
 %% JOBB PÅ UNDERARM ISTÄLLET FÖR NAGELBAND
 
-A=imread('vesselsunderam.jpg'); %Samma sak fast för underarm 
+A=imread('vesselsunderarm2.jpg'); %Samma sak fast för underarm 
 gray_pic_underarm = rgb2gray(A);
-B=adapthisteq(gray_pic_underarm, 'cliplimit', 0.05, 'Distribution','rayleigh');
+B=adapthisteq(gray_pic_underarm, 'cliplimit', 0.045, 'Distribution','rayleigh');
 
 figure(6)
 imshowpair(gray_pic_underarm,B,'montage');
@@ -76,7 +76,10 @@ B(idx3) = 0;
 
 idx4 = find(B > 90);
 B(idx4) = 255;
-% J=J/(max(max(J)));
 
 figure(7)
 imshow(B)
+
+%% Räkna hur stor andel pixlar som är svarta ifrån underarmsbild
+
+black_pix=sum(B(:)==0)

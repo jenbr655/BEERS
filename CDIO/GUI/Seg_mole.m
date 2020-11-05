@@ -48,11 +48,11 @@ BWfill = imfill(BW,'holes'); %Fills holes
 % end
 
 
-boundry_line=figure(37);
+boundry_line=figure;
 imshow(im);
 hold on;
 
-for k = 1:length(B),
+for k = 1:length(B)
     boundary = B{k};
     if(k > N)
         %plot(boundary(:,2), boundary(:,1), 'g', 'LineWidth', 2);
@@ -62,7 +62,7 @@ for k = 1:length(B),
 end
 
 saveas(boundry_line, 'boundary_pic.jpg');
-
+close(boundry_line);
 
 res=BWfill;
 end

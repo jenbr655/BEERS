@@ -124,10 +124,10 @@ function axes1_CreateFcn(hObject, eventdata, handles)
 % hObject    handle to axes1 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    empty - handles not created until after all CreateFcns called
-logo=imread('logo_frame.png')
-image(logo)
+logo=imread('logo_frame.png');
+image(logo);
 axis off;
-axis image
+axis image;
 
 % Hint: place code in OpeningFcn to populate axes1
 
