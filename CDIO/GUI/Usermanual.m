@@ -22,7 +22,7 @@ function varargout = Usermanual(varargin)
 
 % Edit the above text to modify the response to help Usermanual
 
-% Last Modified by GUIDE v2.5 02-Nov-2020 10:47:25
+% Last Modified by GUIDE v2.5 05-Nov-2020 13:20:23
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -71,3 +71,16 @@ function varargout = Usermanual_OutputFcn(hObject, eventdata, handles)
 
 % Get default command line output from handles structure
 varargout{1} = handles.output;
+
+
+% --- Executes during object creation, after setting all properties.
+function axes1_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to axes1 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+logo=imread('logo_frame.png')
+image(logo)
+axis off;
+axis image
+
+% Hint: place code in OpeningFcn to populate axes1
