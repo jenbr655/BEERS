@@ -114,7 +114,7 @@ set(handles.listbox1, 'string', a)
 % axes(handles.historyAxes) %G�r in till picture axes, s�tter som aktiv (figure)
 % pic=imread('hist_pic.jpg');
 % imshow(pic);
- 
+
 
 
 historyname
