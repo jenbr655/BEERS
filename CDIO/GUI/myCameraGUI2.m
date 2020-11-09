@@ -1,5 +1,4 @@
 function varargout = myCameraGUI2(varargin)
-
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
 gui_State = struct('gui_Name',       mfilename, ...
@@ -23,7 +22,7 @@ end
 % --- Executes just before myCameraGUI2 is made visible.
 function myCameraGUI2_OpeningFcn(hObject, eventdata, handles, varargin)
 handles.output = hObject;
-handles.output = hObject;
+handles.output = hObject; %BEHÖVS DENNA?
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%EGET MIKROSKOP%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 clear neostrip;
 clear a;
@@ -72,10 +71,8 @@ varargout{1} = handles.output;
 
 % --- Executes on button press in captureImage.
 function captureImage_Callback(hObject, eventdata, handles)
-
 frame = get(get(handles.cameraAxes,'children'),'cdata'); % The current displayed frame
 DateString = datestr(now, 30);
-
 name = get(handles.name, 'String');
 if (isempty(name)||strcmp(name,'Enter name...'))
     name = 'anonymous';
@@ -107,7 +104,6 @@ imshow(frame)
 
 % --- Executes during object creation, after setting all properties.
 function text2_CreateFcn(hObject, eventdata, handles)
-
 
 
 % --- Executes on selection change in zoommenu.
