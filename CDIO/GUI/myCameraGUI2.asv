@@ -25,27 +25,9 @@ function myCameraGUI2_OpeningFcn(hObject, eventdata, handles, varargin)
 handles.output = hObject;
 handles.output = hObject;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%EGET MIKROSKOP%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-clear neostrip;
-clear a;
-a=arduino('COM4', 'Uno','Libraries', 'Adafruit/NeoPixel')
-neostrip=addon(a,'Adafruit/NeoPixel', 'D6', 12)
-%neostrip.Brightness=0.2;
-neostrip.Brightness=1;
-writeColor(neostrip, 1:12, [1, 1, 1]);
-
-cam = videoinput('tisimaq_r2013_64', 1, 'BY8 (1024x768)');
-src = getselectedsource(cam);
-cam.FramesPerTrigger = 1;
-imWidth=640;
-imHeight=480;
-axes(handles.cameraAxes);
-hImage=image(zeros(imHeight,imWidth,3),'Parent',handles.cameraAxes);
-preview(cam,hImage)
-DateString = datestr(now, 23);
-set(handles.dateTimeEdit, 'string',DateString);
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%USB MIKROSKOP%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% cam=webcam('USB 2760 Camera')
+% cam = videoinput('tisimaq_r2013_64', 1, 'BY8 (1024x768)');
+% src = getselectedsource(cam);
+% cam.FramesPerTrigger = 1;
 % imWidth=640;
 % imHeight=480;
 % axes(handles.cameraAxes);
@@ -53,6 +35,16 @@ set(handles.dateTimeEdit, 'string',DateString);
 % preview(cam,hImage)
 % DateString = datestr(now, 23);
 % set(handles.dateTimeEdit, 'string',DateString);
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%USB MIKROSKOP%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+cam=webcam('USB 2760 Camera')
+imWidth=640;
+imHeight=480;
+axes(handles.cameraAxes);
+hImage=image(zeros(imHeight,imWidth,3),'Parent',handles.cameraAxes);
+preview(cam,hImage)
+DateString = datestr(now, 23);
+set(handles.dateTimeEdit, 'string',DateString);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -116,6 +108,7 @@ contents= get(hObject, 'String');
 chosen_zoom = contents{get(hObject, 'Value')};
 
 
+
 % --- Executes during object creation, after setting all properties.
 function zoommenu_CreateFcn(hObject, eventdata, handles)
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
@@ -139,6 +132,13 @@ end
 
 % --- Executes on key press with focus on name and none of its controls.
 function name_KeyPressFcn(hObject, eventdata, handles)
+% hObject    handle to name (see GCBO)
+% eventdata  structure with the following fields (see MATLAB.UI.CONTROL.UICONTROL)
+%	Key: name of the key that was pressed, in lower case
+%	Character: character interpretation of the key(s) that was pressed
+%	Modifier: name(s) of the modifier key(s) (i.e., control, shift) pressed
+% handles    structure with handles and user data (see GUIDATA)
+
 %FÖRSÖK TILL ATT FÅ UPP NAMNET PÅ PARAMETERPANELEN DÅ MAN TRYCKER PÅ ENTER
 % if strcmpi(eventdata.Key, 'return')
 %    setappdata(hObject, 'name', get(hObject, 'String'))
@@ -215,13 +215,19 @@ switch choise
 disp(zoom)
  s = load('current_pic.mat');
 imwrite(s.frame, 'current_pic.jpg');
+
 a = area_calc(Seg_mole(), zoom); %Area_calc räknar ut arean (i pixlar) från den binära bilden som fås från hairGone.
+
+
 axes(handles.axes3)
 pic=imread('boundary_pic.jpg');
 imshow(pic);
+
 set(handles.molesizeval, 'string',a);
 
+
 function editName_Callback(hObject, eventdata, handles)
+
 
 % --- Executes during object creation, after setting all properties.
 function editName_CreateFcn(hObject, eventdata, handles)
