@@ -352,7 +352,8 @@ imwrite(s.frame, 'current_pic.jpg');
 
 a = area_calc(Seg_mole(), zoom); %Area_calc räknar ut arean (i pixlar) från den binära bilden som fås från hairGone.
 
-axes(handles.pictureAxes)
+
+axes(handles.axes3)
 pic=imread('boundary_pic.jpg');
 imshow(pic);
 
