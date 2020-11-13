@@ -1,5 +1,4 @@
 function varargout = myCameraGUI2(varargin)
-
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
 gui_State = struct('gui_Name',       mfilename, ...
@@ -23,29 +22,19 @@ end
 % --- Executes just before myCameraGUI2 is made visible.
 function myCameraGUI2_OpeningFcn(hObject, eventdata, handles, varargin)
 handles.output = hObject;
-handles.output = hObject;
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%EGET MIKROSKOP%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-clear neostrip;
-clear a;
-a=arduino('COM4', 'Uno','Libraries', 'Adafruit/NeoPixel')
-neostrip=addon(a,'Adafruit/NeoPixel', 'D6', 12)
-%neostrip.Brightness=0.2;
-neostrip.Brightness=1;
-writeColor(neostrip, 1:12, [1, 1, 1]);
-
-cam = videoinput('tisimaq_r2013_64', 1, 'BY8 (1024x768)');
-src = getselectedsource(cam);
-cam.FramesPerTrigger = 1;
-imWidth=640;
-imHeight=480;
-axes(handles.cameraAxes);
-hImage=image(zeros(imHeight,imWidth,3),'Parent',handles.cameraAxes);
-preview(cam,hImage)
-DateString = datestr(now, 23);
-set(handles.dateTimeEdit, 'string',DateString);
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%USB MIKROSKOP%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% cam=webcam('USB 2760 Camera')
+handles.output = hObject; %BEH�VS DENNA?
+%%%%%%%%%%%%%%%%%%%%%%%%%%%EGET MIKROSKOP%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% clear neostrip;
+% clear a;
+% a=arduino('COM4', 'Uno','Libraries', 'Adafruit/NeoPixel')
+% neostrip=addon(a,'Adafruit/NeoPixel', 'D6', 12)
+% %neostrip.Brightness=0.2;
+% neostrip.Brightness=1;
+% writeColor(neostrip, 1:12, [1, 1, 1]);
+% 
+% cam = videoinput('tisimaq_r2013_64', 1, 'BY8 (1024x768)');
+% src = getselectedsource(cam);
+% cam.FramesPerTrigger = 1;
 % imWidth=640;
 % imHeight=480;
 % axes(handles.cameraAxes);
@@ -54,7 +43,18 @@ set(handles.dateTimeEdit, 'string',DateString);
 % DateString = datestr(now, 23);
 % set(handles.dateTimeEdit, 'string',DateString);
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%USB MIKROSKOP%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%cam=webcam('USB 2760 Camera')
+cam=webcam('USB2.0 Digital Camera')
+imWidth=640;
+imHeight=480;
+axes(handles.cameraAxes);
+hImage=image(zeros(imHeight,imWidth,3),'Parent',handles.cameraAxes);
+preview(cam,hImage)
+DateString = datestr(now, 23);
+set(handles.dateTimeEdit, 'string',DateString);
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Update handles structure
 guidata(hObject, handles);
@@ -72,10 +72,8 @@ varargout{1} = handles.output;
 
 % --- Executes on button press in captureImage.
 function captureImage_Callback(hObject, eventdata, handles)
-
 frame = get(get(handles.cameraAxes,'children'),'cdata'); % The current displayed frame
 DateString = datestr(now, 30);
-
 name = get(handles.name, 'String');
 if (isempty(name)||strcmp(name,'Enter name...'))
     name = 'anonymous';
@@ -86,7 +84,7 @@ mkdir(name);
 save(name + "/" + DateString + ".mat", 'frame');
 %setappdata(handles.pictureAxes, 'newest', frame)
 cd('C:\Users\marhu961\Desktop\BEERS\CDIO\GUI')
-axes(handles.pictureAxes) %G�r in till picture axes, s�tter som aktiv (figure)
+axes(handles.pictureAxes) %G���r in till picture axes, s���tter som aktiv (figure)
 imshow(frame)
 %imwrite(frame, 'current_pic', 'JPEG');
 save('current_pic.mat', 'frame');
@@ -107,7 +105,6 @@ imshow(frame)
 
 % --- Executes during object creation, after setting all properties.
 function text2_CreateFcn(hObject, eventdata, handles)
-
 
 
 % --- Executes on selection change in zoommenu.
@@ -139,7 +136,7 @@ end
 
 % --- Executes on key press with focus on name and none of its controls.
 function name_KeyPressFcn(hObject, eventdata, handles)
-%FÖRSÖK TILL ATT FÅ UPP NAMNET PÅ PARAMETERPANELEN DÅ MAN TRYCKER PÅ ENTER
+%F��RS��K TILL ATT F�� UPP NAMNET P�� PARAMETERPANELEN D�� MAN TRYCKER P�� ENTER
 % if strcmpi(eventdata.Key, 'return')
 %    setappdata(hObject, 'name', get(hObject, 'String'))
 % end
@@ -215,7 +212,7 @@ switch choise
 disp(zoom)
  s = load('current_pic.mat');
 imwrite(s.frame, 'current_pic.jpg');
-a = area_calc(Seg_mole(), zoom); %Area_calc räknar ut arean (i pixlar) från den binära bilden som fås från hairGone.
+a = area_calc(Seg_mole(), zoom); %Area_calc r��knar ut arean (i pixlar) fr��n den bin��ra bilden som f��s fr��n hairGone.
 axes(handles.axes3)
 pic=imread('boundary_pic.jpg');
 imshow(pic);
