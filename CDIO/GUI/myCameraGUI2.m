@@ -23,13 +23,13 @@ end
 function myCameraGUI2_OpeningFcn(hObject, eventdata, handles, varargin)
 handles.output = hObject;
 handles.output = hObject; %BEH�VS DENNA?
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%EGET MIKROSKOP%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%EGET MIKROSKOP%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % clear neostrip;
 % clear a;
 % a=arduino('COM4', 'Uno','Libraries', 'Adafruit/NeoPixel')
 % neostrip=addon(a,'Adafruit/NeoPixel', 'D6', 12)
 % %neostrip.Brightness=0.2;
-% neostrip.Brightness=0.5;
+% neostrip.Brightness=1;
 % writeColor(neostrip, 1:12, [1, 1, 1]);
 % 
 % cam = videoinput('tisimaq_r2013_64', 1, 'BY8 (1024x768)');
@@ -43,9 +43,9 @@ handles.output = hObject; %BEH�VS DENNA?
 % DateString = datestr(now, 23);
 % set(handles.dateTimeEdit, 'string',DateString);
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%USB MIKROSKOP%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-cam=webcam('USB 2760 Camera')
-%cam=webcam('USB2.0 Digital Camera')
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%USB MIKROSKOP%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%cam=webcam('USB 2760 Camera')
+cam=webcam('USB2.0 Digital Camera')
 imWidth=640;
 imHeight=480;
 axes(handles.cameraAxes);
@@ -54,7 +54,7 @@ preview(cam,hImage)
 DateString = datestr(now, 23);
 set(handles.dateTimeEdit, 'string',DateString);
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Update handles structure
 guidata(hObject, handles);

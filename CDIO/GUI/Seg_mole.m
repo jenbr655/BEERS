@@ -16,8 +16,10 @@ imC = imclose(imbin, se);
 imO = imopen(imC,se);
 for i = 1:3
 imO = imerode(imO,se);
-%imO = imdilate(imO,se);
+
 end
+
+imO = imdilate(imO,se);
 
 BW = bwareaopen(imO,1000); %Removes objects that have connections fewer than 1000 pixels
 BWfill = imfill(BW,'holes'); %Fills holes 

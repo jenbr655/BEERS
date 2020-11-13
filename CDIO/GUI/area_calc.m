@@ -1,5 +1,8 @@
 
 function [result]=area_calc(img, zoom) %% Area ber�kning 
+
+circ=regionprops(img, 'circularity')
+
 % Alt som inte funkar �n men skulle kunna anv�nda
 
 %area=regionprops(im, 'Area')

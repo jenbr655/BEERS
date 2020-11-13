@@ -1,4 +1,4 @@
-cam=webcam('USB2.0 Digital Camera')
+cam=webcam('USB 2760 Camera')
 imWidth=640;
 imHeight=480;
 %axes(handles.cameraAxes);
@@ -6,6 +6,13 @@ imHeight=480;
 preview(cam)
 %DateString = datestr(now, 23);
 %set(handles.dateTimeEdit, 'string',DateString);
+
+% pause(5)
+% pic=cam.snapshot;
+% 
+% pause(5)
+% pic2=cam.snapshot;
+
 
 %%
 % Display a list of installed cameras.
