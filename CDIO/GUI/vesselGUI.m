@@ -21,11 +21,46 @@ end
 % --- Executes just before vesselGUI is made visible.
 function vesselGUI_OpeningFcn(hObject, eventdata, handles, varargin)
 
-% Choose default command line output for vesselGUI
 handles.output = hObject;
+handles.output = hObject; %BEH�VS DENNA?
+%%%%%%%%%%%%%%%%%%%%%%%%%%%EGET MIKROSKOP%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% clear neostrip;
+% clear a;
+% a=arduino('COM4', 'Uno','Libraries', 'Adafruit/NeoPixel')
+% neostrip=addon(a,'Adafruit/NeoPixel', 'D6', 12)
+% %neostrip.Brightness=0.2;
+% neostrip.Brightness=1;
+% writeColor(neostrip, 1:12, [1, 1, 1]);
+% 
+% cam = videoinput('tisimaq_r2013_64', 1, 'BY8 (1024x768)');
+% src = getselectedsource(cam);
+% cam.FramesPerTrigger = 1;
+% imWidth=640;
+% imHeight=480;
+% axes(handles.cameraAxes);
+% hImage=image(zeros(imHeight,imWidth,3),'Parent',handles.cameraAxes);
+% preview(cam,hImage)
+% DateString = datestr(now, 23);
+% set(handles.dateTimeEdit, 'string',DateString);
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%USB MIKROSKOP%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+cam=webcam('USB 2760 Camera')
+%cam=webcam('USB2.0 Digital Camera')
+imWidth=640;
+imHeight=480;
+axes(handles.cameraAxes);
+hImage=image(zeros(imHeight,imWidth,3),'Parent',handles.cameraAxes);
+preview(cam,hImage)
+DateString = datestr(now, 23);
+set(handles.dateTimeEdit, 'string',DateString);
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Update handles structure
 guidata(hObject, handles);
+
+% UIWAIT makes myCameraGUI2 wait for user response (see UIRESUME)
+% uiwait(handles.vesselGUI); %%%EGET TAGIT BORT KOMMENTAR
 
 
 % --- Outputs from this function are returned to the command line.
@@ -34,12 +69,13 @@ varargout{1} = handles.output;
 
 
 % --- Executes during object creation, after setting all properties.
-function axes1_CreateFcn(hObject, eventdata, handles)
+function cameraAxes_CreateFcn(hObject, eventdata, handles)
 
 
 % --- Executes during object creation, after setting all properties.
-function axes2_CreateFcn(hObject, eventdata, handles)
-
+function pictureAxes_CreateFcn(hObject, eventdata, handles)
+%load('testframe.mat');
+%imshow(frame)
 
 % --- Executes during object creation, after setting all properties.
 function axes4_CreateFcn(hObject, eventdata, handles)
@@ -49,41 +85,102 @@ axis off;
 axis image
 
 
-function edit1_Callback(hObject, eventdata, handles)
+function name_Callback(hObject, eventdata, handles)
 
 
 % --- Executes during object creation, after setting all properties.
-function edit1_CreateFcn(hObject, eventdata, handles)
+function name_CreateFcn(hObject, eventdata, handles)
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
     set(hObject,'BackgroundColor','white');
 end
 
 
-% --- Executes on selection change in popupmenu1.
-function popupmenu1_Callback(hObject, eventdata, handles)
+% --- Executes on selection change in zoommenu.
+function zoommenu_Callback(hObject, eventdata, handles)
+contents= get(hObject, 'String');
+chosen_zoom = contents{get(hObject, 'Value')};
+
 
 
 % --- Executes during object creation, after setting all properties.
-function popupmenu1_CreateFcn(hObject, eventdata, handles)
+function zoommenu_CreateFcn(hObject, eventdata, handles)
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
     set(hObject,'BackgroundColor','white');
 end
 
 
-% --- Executes on button press in pushbutton1.
-function pushbutton1_Callback(hObject, eventdata, handles)
+% --- Executes on button press in captureImage.
+function captureImage_Callback(hObject, eventdata, handles)
+frame = get(get(handles.cameraAxes,'children'),'cdata'); % The current displayed frame
+DateString = datestr(now, 30);
+name = get(handles.name, 'String');
+if (isempty(name)||strcmp(name,'Enter name...'))
+    name = 'anonymous';
+end
+base = 'C:\Users\marhu961\Desktop\BEERS\CDIO\GUI\SAVEDIMAGES';   % Assumed to be existing
+cd(base);
+mkdir(name);
+save(name + "/" + DateString + ".mat", 'frame');
+%setappdata(handles.pictureAxes, 'newest', frame)
+cd('C:\Users\marhu961\Desktop\BEERS\CDIO\GUI')
+axes(handles.pictureAxes) %G���r in till picture axes, s���tter som aktiv (figure)
+imshow(frame)
+%imwrite(frame, 'current_pic', 'JPEG');
+save('current_pic.mat', 'frame');
+disp("Frame saved to file: " + name + "/" + DateString + ".mat");
 
 
-% --- Executes on button press in pushbutton2.
-function pushbutton2_Callback(hObject, eventdata, handles)
+% --- Executes on button press in acquisition.
+function acquisition_Callback(hObject, eventdata, handles)
+%%%%%%%%%%%%%%%%%%%%%%%%%%AREA%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+choise = get(handles.zoommenu,'Value'); %get selected band
+zoom=0; %Initialize zoom-parameter
+switch choise
+     case 1
+       disp('You got no ZOOM')
+     case 2
+       zoom=1;
+     case 3 
+      zoom=2;
+      case 4 
+      zoom=3;
+      case 5 
+      zoom=4;
+      case 6
+      zoom=5;
+      case 7 
+      zoom=6;
+      case 8 
+      zoom=7;
+      case 9 
+      zoom=8;
+      case 10
+      zoom=9;
+      case 11 
+      zoom=9.5;
+      case 12
+      zoom=10;
+    end
+disp(zoom)
+ s = load('current_pic.mat');
+imwrite(s.frame, 'current_pic.jpg');
+a = seg_ves(); %Area_calc r��knar ut arean (i pixlar) fr��n den bin��ra bilden som f��s fr��n hairGone.
+axes(handles.axes3)
+pic=imread('boundary_pic.jpg');
+imshow(pic);
+set(handles.molesizeval, 'string',a);
 
 
-% --- Executes on button press in pushbutton3.
-function pushbutton3_Callback(hObject, eventdata, handles)
+% --- Executes on button press in back.
+function back_Callback(hObject, eventdata, handles)
+closereq();
+Startmenu
 
 
-% --- Executes on button press in pushbutton4.
-function pushbutton4_Callback(hObject, eventdata, handles)
+% --- Executes on button press in quit.
+function quit_Callback(hObject, eventdata, handles)
+closereq();
+delete(webcam('USB 2760 Camera'))
 
 
 function edit4_Callback(hObject, eventdata, handles)
@@ -96,31 +193,40 @@ if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgr
 end
 
 
-function edit5_Callback(hObject, eventdata, handles)
+function editName_Callback(hObject, eventdata, handles)
 
 
 % --- Executes during object creation, after setting all properties.
-function edit5_CreateFcn(hObject, eventdata, handles)
+function editName_CreateFcn(hObject, eventdata, handles)
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
     set(hObject,'BackgroundColor','white');
 end
 
 
-function edit6_Callback(hObject, eventdata, handles)
+function dateTimeEdit_Callback(hObject, eventdata, handles)
 
 
 % --- Executes during object creation, after setting all properties.
-function edit6_CreateFcn(hObject, eventdata, handles)
+function dateTimeEdit_CreateFcn(hObject, eventdata, handles)
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
     set(hObject,'BackgroundColor','white');
 end
 
 
-function edit7_Callback(hObject, eventdata, handles)
+function molesizeval_Callback(hObject, eventdata, handles)
 
 
 % --- Executes during object creation, after setting all properties.
-function edit7_CreateFcn(hObject, eventdata, handles)
+function molesizeval_CreateFcn(hObject, eventdata, handles)
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
     set(hObject,'BackgroundColor','white');
 end
+
+
+% --- Executes on button press in ok.
+function ok_Callback(hObject, eventdata, handles)
+name = get(handles.name, 'String');
+set(handles.editName, 'string',name);
+% hObject    handle to ok (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)

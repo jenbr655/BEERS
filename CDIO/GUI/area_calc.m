@@ -1,5 +1,5 @@
 
-function [result]=area_calc(img, zoom) %% Area ber�kning 
+function [result, circ]=area_calc(img, zoom) %% Area ber�kning 
 
 circ=regionprops(img, 'circularity')
 
