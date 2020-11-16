@@ -59,7 +59,7 @@ function [black_pix]= Seg_ves()
 % imshow(J)
 
 %% JOBB PÅ UNDERARM ISTÄLLET FÖR NAGELBAND
-%JAG HAR BARA FÖRSÖKT ATT TA BORT FIGURER SÅ ATT GUIT iINTE ÖVERBELASTAS, inte ändrat något annat //Jennifer :)
+%JAG HAR BARA FÖRSÖKT ATT TA BORT FIGURER SÅ ATT GUIT iINTE ÖVERBELASTAS :)
 
 A=imread('current_pic.jpg'); %Samma sak fast för underarm 
 gray_pic_underarm = rgb2gray(A);
@@ -81,7 +81,7 @@ imshow(B)
 
 a=figure(7);
 saveas(a, 'boundary_pic.jpg');
-close(a);
+%close(a);
 
 %% Räkna hur stor andel pixlar som är svarta ifrån underarmsbild
 
