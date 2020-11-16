@@ -60,7 +60,7 @@ set(handles.dateTimeEdit, 'string',DateString);
 guidata(hObject, handles);
 
 % UIWAIT makes myCameraGUI2 wait for user response (see UIRESUME)
-% uiwait(handles.vesselGUI); %%%EGET TAGIT BORT KOMMENTAR
+ uiwait(handles.figure1); %%%EGET TAGIT BORT KOMMENTAR
 
 
 % --- Outputs from this function are returned to the command line.
