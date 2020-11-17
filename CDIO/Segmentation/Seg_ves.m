@@ -1,17 +1,12 @@
 close all
-I=imread('vesselsunderarm.jpg');
-gray_pic = rgb2gray(I);
-J2=adapthisteq(gray_pic, 'cliplimit', 0.08, 'Distribution','rayleigh');
+I=imread('smallvessels.jpg');
+J2 = rgb2gray(I);
+J2 = adapthisteq(J2, 'cliplimit', 0.08, 'Distribution','rayleigh');
 J2 = double(J2);
-%J2 = imresize(J2, 0.5);
-%J = J/max(max(J));
+J2 = imresize(J2, 1);
+%J2 = J2/max(max(J2));
 
-% figure
-% imshowpair(J2,gray_pic,'montage'), colorbar
 
-histo = hist(J2(:),0:1:255);
-figure
-plot(histo)
 %% Circular convolution, average filtering
 sigma = 2;
 lpH=exp(-0.5*([-3:3]/sigma).^2); 
@@ -47,25 +42,14 @@ for i = 1:7
 end
 kernim =real(fftshift(ifft2(ifftshift(KERNIM))));
 %%
-%J = averim;
+%J2 = averim;
 J2 = kernim;
-
-% kernel = [1 2 1; 2 4 2; 1 2 1] / 16;
-% J = conv2(J, kernel, 'same');
-% N = 5;
-% for k=1:N
-%     J = conv2(J, kernel, 'same');
-% end
-
-histo = hist(J2(:),0:1:255);
-figure
-plot(histo)
 
 [T,T1,T2] = midway(J2);
 [~,T1,~] = midway(J2,T1);
 imbin = imbinarize(J2,T1);
-% se = [0 1 0; 1 1 1; 0 1 0];
-% imbin = imerode(imbin,se);
+%se = [1 1 1; 1 1 1; 1 1 1];
+%imbin = imerode(imbin,se);
 
 figure
 imshowpair(imbin, J2, 'montage')
@@ -91,7 +75,7 @@ figure, imagesc(S);
 colormap(colorcube(300)), colorbar;
 title('Skeleton')
 
-
+%%
 %Det här scriptet är en början på att segmentera kärlträdet
 %Både segmentering av loopar i nagelband och små pluttar på underarm
 
@@ -103,16 +87,19 @@ figure(1)
 imshowpair(gray_pic,J,'montage'); %Plotta orginal mot resultat
 colorbar
 
-% 
-% figure(3);
-% imshow(hairsbin)
-
 kernel = [1 2 1; 2 4 2; 1 2 1]/16; %filtrera ytterligare med kärna
 J = conv2(J,kernel,'same');
-N = 1;
+N = 3;
 for k=1:N
     J = conv2(J, kernel, 'same');
 end
+
+[T,T1,T2] = midway(J);
+[~,T1,~] = midway(J,T1);
+imbinJ = imbinarize(J,T1);
+
+figure
+imshow(imbinJ);
 
 %% AMANDAS BÖS
 % J=double(J);
