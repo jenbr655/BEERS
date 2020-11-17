@@ -1,4 +1,4 @@
-function [x, y] = hist_eq(im)
+function [im, table] = hist_eq(im)
 %UNTITLED Summary of this function goes here
 %   Detailed explanation goes here
 n_bins = double(max(max(im)));
@@ -19,8 +19,8 @@ res = zeros(h, b);
 for i = 1:1:length(L_table)
     curr_val = L_table(1,i);
     res = res + curr_val*(im == i-1);
-end 
-x = res; 
-y = L_table;
+end
+im = res;
+table = L_table;
 end
 
