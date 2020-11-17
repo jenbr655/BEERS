@@ -44,8 +44,8 @@ handles.output = hObject; %BEH�VS DENNA?
 % set(handles.dateTimeEdit, 'string',DateString);
 
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%USB MIKROSKOP%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%cam=webcam('USB 2760 Camera')
-cam=webcam('USB2.0 Digital Camera')
+cam=webcam('USB 2760 Camera')
+%cam=webcam('USB2.0 Digital Camera')
 imWidth=640;
 imHeight=480;
 axes(handles.cameraAxes);
@@ -212,11 +212,12 @@ switch choise
 disp(zoom)
  s = load('current_pic.mat');
 imwrite(s.frame, 'current_pic.jpg');
-a = area_calc(Seg_mole(), zoom); %Area_calc r��knar ut arean (i pixlar) fr��n den bin��ra bilden som f��s fr��n hairGone.
+[a, circ] = area_calc(Seg_mole(), zoom); %Area_calc r��knar ut arean (i pixlar) fr��n den bin��ra bilden som f��s fr��n hairGone.
 axes(handles.axes3)
 pic=imread('boundary_pic.jpg');
 imshow(pic);
 set(handles.molesizeval, 'string',a);
+%set(handles.circval, 'string',circ);
 
 function editName_Callback(hObject, eventdata, handles)
 
@@ -254,11 +255,11 @@ axis off;
 axis image
 % Hint: place code in OpeningFcn to populate axes4
 
-function RoundnessEdit_Callback(hObject, eventdata, handles)
+function circval_Callback(hObject, eventdata, handles)
 
 
 % --- Executes during object creation, after setting all properties.
-function RoundnessEdit_CreateFcn(hObject, eventdata, handles)
+function circval_CreateFcn(hObject, eventdata, handles)
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
     set(hObject,'BackgroundColor','white');
 end

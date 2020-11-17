@@ -79,7 +79,7 @@ title('Skeleton')
 %Det här scriptet är en början på att segmentera kärlträdet
 %Både segmentering av loopar i nagelband och små pluttar på underarm
 
-I=imread('smallvessels.jpg');
+I=imread('vesselsunderarm.jpg');
 gray_pic = rgb2gray(I);
 J=adapthisteq(gray_pic, 'cliplimit', 0.08, 'Distribution','rayleigh'); %funktion som gör bättre kontrast 
 
