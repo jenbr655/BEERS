@@ -1,10 +1,10 @@
 
 function [result, circ]=area_calc(img, zoom) %% Area ber�kning 
 
-circularity=regionprops(img, 'circularity');
-C= struct2cell(circularity);
+circularity=regionprops(img, 'circularity')
+C= struct2cell(circularity)
 A= cell2mat(C);
-circ=A*100; %Circularity in percent
+
 % circ=circularity/1 %circularity in percent 
 
 % Alt som inte funkar �n men skulle kunna anv�nda
@@ -28,7 +28,6 @@ num_one=sum(img(:)==1); %how many ones i matrix
 %area_mole=tot_area*num_one_of_tot %area in pixels that are white adding
 %10% due to segmetation
  area_mole=[];
- 
 if zoom==1
      area_mole=num_one*(1/27)^2; %Calibrated wrt pixels/cm and changed to mm
 end
@@ -73,15 +72,8 @@ if zoom==6
  if zoom==10
      area_mole=num_one*(1/127)^2; %Calibrated wrt pixels/cm and changed to mm
  end
- 
+
 result = area_mole;
-
-  if zoom==0
-   circ='Choose zoom';
-   result='Choose zoom';
-  end
- 
-
 end
 %F�r att detta ska fungera beh�ver vi nu veta storleken av en pixel och det
 %beror p� inzoomning osv.

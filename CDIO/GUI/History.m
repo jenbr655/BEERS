@@ -44,7 +44,9 @@ end
 
 % --- Executes on button press in ok.
 function ok_Callback(hObject, eventdata, handles)
-historyname = get(handles.historyName, 'String');
+historyname = get(handles.historyName, 'String')
+
+
 base = 'C:\Users\marhu961\Desktop\BEERS\CDIO\GUI\SAVEDIMAGES';   % Assumed to be existing
 cd(base);
 cd(historyname);

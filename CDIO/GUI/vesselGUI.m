@@ -24,28 +24,17 @@ function vesselGUI_OpeningFcn(hObject, eventdata, handles, varargin)
 handles.output = hObject;
 handles.output = hObject; %BEH�VS DENNA?
 %%%%%%%%%%%%%%%%%%%%%%%%%%%EGET MIKROSKOP%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-clear neostrip;
-clear a;
-a=arduino('COM4', 'Uno','Libraries', 'Adafruit/NeoPixel')
-neostrip=addon(a,'Adafruit/NeoPixel', 'D6', 12)
-%neostrip.Brightness=0.2;
-neostrip.Brightness=1;
-writeColor(neostrip, 1:12, [1, 1, 1]);
-
-cam = videoinput('tisimaq_r2013_64', 1, 'BY8 (1024x768)');
-src = getselectedsource(cam);
-cam.FramesPerTrigger = 1;
-imWidth=640;
-imHeight=480;
-axes(handles.cameraAxes);
-hImage=image(zeros(imHeight,imWidth,3),'Parent',handles.cameraAxes);
-preview(cam,hImage)
-DateString = datestr(now, 23);
-set(handles.dateTimeEdit, 'string',DateString);
-
-% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%USB MIKROSKOP%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% cam=webcam('USB 2760 Camera')
-% %cam=webcam('USB2.0 Digital Camera')
+% clear neostrip;
+% clear a;
+% a=arduino('COM4', 'Uno','Libraries', 'Adafruit/NeoPixel')
+% neostrip=addon(a,'Adafruit/NeoPixel', 'D6', 12)
+% %neostrip.Brightness=0.2;
+% neostrip.Brightness=1;
+% writeColor(neostrip, 1:12, [1, 1, 1]);
+% 
+% cam = videoinput('tisimaq_r2013_64', 1, 'BY8 (1024x768)');
+% src = getselectedsource(cam);
+% cam.FramesPerTrigger = 1;
 % imWidth=640;
 % imHeight=480;
 % axes(handles.cameraAxes);
@@ -53,6 +42,17 @@ set(handles.dateTimeEdit, 'string',DateString);
 % preview(cam,hImage)
 % DateString = datestr(now, 23);
 % set(handles.dateTimeEdit, 'string',DateString);
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%USB MIKROSKOP%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+cam=webcam('USB 2760 Camera')
+%cam=webcam('USB2.0 Digital Camera')
+imWidth=640;
+imHeight=480;
+axes(handles.cameraAxes);
+hImage=image(zeros(imHeight,imWidth,3),'Parent',handles.cameraAxes);
+preview(cam,hImage)
+DateString = datestr(now, 23);
+set(handles.dateTimeEdit, 'string',DateString);
 
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -137,7 +137,9 @@ choise = get(handles.zoommenu,'Value'); %get selected band
 zoom=0; %Initialize zoom-parameter
 switch choise
      case 1
-       disp('You got no ZOOM')
+      % disp('You got no ZOOM')
+       set(handles.molesizeval, 'string','Choose zoom');
+       zoom=0;
      case 2
        zoom=1;
      case 3 
@@ -164,7 +166,7 @@ switch choise
 disp(zoom)
  s = load('current_pic.mat');
 imwrite(s.frame, 'current_pic.jpg');
-a = Seg_ves(); %Area_calc r��knar ut arean (i pixlar) fr��n den bin��ra bilden som f��s fr��n hairGone.
+a = Seg_ves_func(); %Area_calc r��knar ut arean (i pixlar) fr��n den bin��ra bilden som f��s fr��n hairGone.
 axes(handles.axes3)
 pic=imread('boundary_pic.jpg');
 imshow(pic);
