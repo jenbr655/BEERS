@@ -1,6 +1,6 @@
 close all
 
-I = imread('underarm1.jpg');
+I = imread('nagelband2.jpg');
 gray_pic = rgb2gray(I);
 J = adapthisteq(gray_pic, 'cliplimit', 0.08, 'Distribution','rayleigh'); %funktion som gör bättre kontrast 
 
@@ -52,6 +52,7 @@ subplot(1,2,1), imagesc(rescorr_n);
 axis image; title('result corr'); colorbar;
 subplot(1,2,2), imagesc(double(gray_pic)+255*rescorrT_n);
 axis image; title('thresh corr'); colorbar;
+
 %%
 rescorr_dc = corrdc(gray_pic,pat); %Corr without local DC-level
 fact3 = 0.2;
@@ -82,11 +83,7 @@ sum(sum(S))
 figure
 imagesc(S)
 
-%%
 
-figure, colormap(gray(256))
-subplot(121), imagesc(rescorr_n)
-subplot(122), imshow(rescorrT_n)
 
 
 
