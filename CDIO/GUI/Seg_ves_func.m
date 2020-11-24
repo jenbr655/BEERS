@@ -1,6 +1,8 @@
-close all
+%New function for calculation of vessel density, gives vessel denstiy in
+%percent
+function [vessel_dens]= Seg_ves_func()
 
-I = imread('nagelband2.jpg');
+I = imread('current_pic.jpg');
 gray_pic = rgb2gray(I);
 J = adapthisteq(gray_pic, 'cliplimit', 0.08, 'Distribution','rayleigh'); %funktion som gör bättre kontrast 
 
@@ -8,8 +10,10 @@ figure(1), %colormap(gray(256))
 imshowpair(gray_pic,J,'montage'); %Plotta orginal mot resultat
 colorbar
 
+
+
 kernel = [1 2 1; 2 4 2; 1 2 1]/16; %filtrera ytterligare med kärna
-%gray_pic = conv2(gray_pic,kernel,'same');
+gray_pic = conv2(gray_pic,kernel,'same');
 
 %%
 pattern = gray_pic(353-99:353+99,310-99:310+99);
@@ -31,15 +35,13 @@ rescorr_n = corrn(gray_pic,pat); %Normalized correlation
 fact2 = 0.95;
 rescorrT_n = rescorr_n>(max(rescorr_n(:))*fact2);
 
-
-figure
-colormap(gray(256))
-axis image; title('pattern'); colorbar;
-subplot(1,2,1), imagesc(rescorr_n);
-axis image; title('result corr'); colorbar;
-subplot(1,2,2), imagesc(double(gray_pic)+255*rescorrT_n);
-axis image; title('thresh corr'); colorbar;
-
+% figure
+% colormap(gray(256))
+% axis image; title('pattern'); colorbar;
+% subplot(1,2,1), imagesc(rescorr_n);
+% axis image; title('result corr'); colorbar;
+% subplot(1,2,2), imagesc(double(gray_pic)+255*rescorrT_n);
+% axis image; title('thresh corr'); colorbar;
 %%
 rescorr_dc = corrdc(gray_pic,pat); %Corr without local DC-level
 fact3 = 0.2;
@@ -66,9 +68,26 @@ rescorrT_ndc = rescorr_ndc>(max(rescorr_ndc(:))*fact4);
 % axis image; title('thresh corr'); colorbar;
 
 S = bwmorph(rescorrT_ndc,'shrink',Inf);
-sum(sum(S))
+sum(sum(S));
 figure
 imagesc(S)
 
+figure(55)
+colormap(gray(256))
+axis image; title('pattern'); colorbar;
+subplot(1,2,1), imagesc(gray_pic);
+axis image; title('result corr'); colorbar;
+subplot(1,2,2), imagesc(rescorrT_ndc);
+axis image; title('thresh corr'); colorbar;
 
+D=figure(55)
+saveas(D,'boundary_pic.jpg')
+
+sz=load('current_pic.mat')
+value=size(sz.frame);
+white_pix=sum(rescorrT_ndc(:)==1);
+tot_pix=value(1)*value(2);
+vessel_dens=(white_pix/tot_pix)*100
+
+end
 

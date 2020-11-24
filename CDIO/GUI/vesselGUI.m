@@ -137,7 +137,9 @@ choise = get(handles.zoommenu,'Value'); %get selected band
 zoom=0; %Initialize zoom-parameter
 switch choise
      case 1
-       disp('You got no ZOOM')
+      % disp('You got no ZOOM')
+       set(handles.molesizeval, 'string','Choose zoom');
+       zoom=0;
      case 2
        zoom=1;
      case 3 
@@ -164,7 +166,7 @@ switch choise
 disp(zoom)
  s = load('current_pic.mat');
 imwrite(s.frame, 'current_pic.jpg');
-a = Seg_ves(); %Area_calc r��knar ut arean (i pixlar) fr��n den bin��ra bilden som f��s fr��n hairGone.
+a = Seg_ves_func(); %Area_calc r��knar ut arean (i pixlar) fr��n den bin��ra bilden som f��s fr��n hairGone.
 axes(handles.axes3)
 pic=imread('boundary_pic.jpg');
 imshow(pic);
