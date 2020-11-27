@@ -1,6 +1,6 @@
 close all
 
-im = imread('Snap_004.jpg');
+im = imread('Snap_003.jpg');
 im = rgb2gray(im);
 im = imresize(im, 0.5);
 
@@ -51,10 +51,10 @@ IMCIRCCONV = IM.*GAUSS;
 imcircconv = fftshift(ifft2(ifftshift(IMCIRCCONV)));
 
 se2 = strel('disk',2);
-hairs = imtophat(imcircconv,se2);
+hairs = imtophat(im,se2);
 
 figure
-imagesc(imcircconv)
+imagesc(hairs)
 
 %%
 
@@ -66,8 +66,8 @@ hairsbin = imclose(hairsbin, se4);
 
 imagesc(hairsbin), colorbar
 
-im_gauss(hairsbin > 0) = mean(mean(im_gauss));
-im(hairsbin > 0) = mean(mean(im_gauss));
+%im_gauss(hairsbin > 0) = mean(mean(im_gauss));
+%im(hairsbin > 0) = mean(mean(im_gauss));
 % 
 % figure
 % subplot(121),imagesc(im_gauss),colorbar

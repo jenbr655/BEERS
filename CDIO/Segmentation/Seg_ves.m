@@ -1,5 +1,5 @@
 close all
-I=imread('smallvessels.jpg');
+I=imread('nagelband2.jpg');
 J2 = rgb2gray(I);
 J2 = adapthisteq(J2, 'cliplimit', 0.08, 'Distribution','rayleigh');
 J2 = double(J2);

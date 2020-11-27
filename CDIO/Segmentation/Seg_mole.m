@@ -1,5 +1,5 @@
 close all
-im = imread('Snap_004.jpg');
+im = imread('Snap_003.jpg');
 im = rgb2gray(im);
 im = double(im);
 im = im/max(max(im)); %The graythresh-function takes values between [0 1]

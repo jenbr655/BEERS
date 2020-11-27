@@ -15,8 +15,7 @@ se = strel('disk',4);
 imC = imclose(imbin, se);
 imO = imopen(imC,se);
 for i = 1:3
-imO = imerode(imO,se);
-
+    imO = imerode(imO,se);
 end
 
 imO = imdilate(imO,se);

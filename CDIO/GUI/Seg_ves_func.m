@@ -10,8 +10,6 @@ figure(1), %colormap(gray(256))
 imshowpair(gray_pic,J,'montage'); %Plotta orginal mot resultat
 colorbar
 
-
-
 kernel = [1 2 1; 2 4 2; 1 2 1]/16; %filtrera ytterligare med kärna
 gray_pic = conv2(gray_pic,kernel,'same');
 
@@ -27,8 +25,15 @@ imagesc(pattern)
 
 
 %%
-pat = load('pat_averagefilt.mat');
-pat = pat.pattern;
+if area == arm
+    pat = load('pat_averagefilt.mat');
+    pat = pat.pattern;
+end
+
+if area == nail
+    pat = load('pattern_nail.mat')
+    pat = pat.pattern_nail;
+end
 
 %%
 rescorr_n = corrn(gray_pic,pat); %Normalized correlation
@@ -68,6 +73,9 @@ rescorrT_ndc = rescorr_ndc>(max(rescorr_ndc(:))*fact4);
 % axis image; title('thresh corr'); colorbar;
 
 S = bwmorph(rescorrT_ndc,'shrink',Inf);
+S = imfill(S,'holes');
+S = bwmorph(S,'shrink',Inf);
+
 sum(sum(S));
 figure
 imagesc(S)
