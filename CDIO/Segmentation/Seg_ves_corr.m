@@ -1,6 +1,6 @@
 close all
 
-I = imread('nagelband2.jpg');
+I = imread('nagelband1.jpg');
 gray_pic = rgb2gray(I);
 J = adapthisteq(gray_pic, 'cliplimit', 0.08, 'Distribution','rayleigh'); %funktion som gör bättre kontrast 
 
@@ -9,42 +9,49 @@ imshowpair(gray_pic,J,'montage'); %Plotta orginal mot resultat
 colorbar
 
 kernel = [1 2 1; 2 4 2; 1 2 1]/16; %filtrera ytterligare med kärna
-%gray_pic = conv2(gray_pic,kernel,'same');
+gray_pic = conv2(gray_pic,kernel,'same');
 
 %%
-pattern = gray_pic(353-99:353+99,310-99:310+99);
-pattern = pattern(104-10:104+9,99-10:99+9);
+% pattern = gray_pic(17-16:17+16,325-20:325+20);
+% pattern = pattern(104-10:104+9,99-10:99+9);
+% 
+% filename = 'pattern.mat';
+% save('pattern', 'pattern')
 
-filename = 'pattern.mat';
-save('pattern', 'pattern')
+% pattern_nail = gray_pic(17-16:17+17,325-20:325+21);
+% filename = 'pattern_nail.mat';
+% save('pattern_nail', 'pattern_nail')
 
-figure, colormap(gray(256))
-imagesc(pattern)
+% figure, colormap(gray(256))
+% imagesc(pattern_nail)
 
 
 %%
 pat = load('pat_averagefilt.mat');
 pat = pat.pattern;
 
-%%
-rescorr_n = corrn(gray_pic,pat); %Normalized correlation
-fact2 = 0.95;
-rescorrT_n = rescorr_n>(max(rescorr_n(:))*fact2);
-
-
-figure
-colormap(gray(256))
-axis image; title('pattern'); colorbar;
-subplot(1,2,1), imagesc(rescorr_n);
-axis image; title('result corr'); colorbar;
-subplot(1,2,2), imagesc(double(gray_pic)+255*rescorrT_n);
-axis image; title('thresh corr'); colorbar;
+pat2 = load('pattern_nail.mat');
+pat2 = pat2.pattern_nail;
 
 %%
-rescorr_dc = corrdc(gray_pic,pat); %Corr without local DC-level
-fact3 = 0.2;
-rescorrT_dc = rescorr_dc>(max(rescorr_dc(:))*fact3);
+% rescorr_n = corrn(gray_pic,pat); %Normalized correlation
+% fact2 = 0.95;
+% rescorrT_n = rescorr_n>(max(rescorr_n(:))*fact2);
+% 
+% 
+% figure
+% colormap(gray(256))
+% axis image; title('pattern'); colorbar;
+% subplot(1,2,1), imagesc(rescorr_n);
+% axis image; title('result corr'); colorbar;
+% subplot(1,2,2), imagesc(double(gray_pic)+255*rescorrT_n);
+% axis image; title('thresh corr'); colorbar;
 
+%%
+% rescorr_dc = corrdc(gray_pic,pat); %Corr without local DC-level
+% fact3 = 0.3;
+% rescorrT_dc = rescorr_dc>(max(rescorr_dc(:))*fact3);
+% 
 % figure
 % colormap(gray(256))
 % axis image; title('pattern'); colorbar;
@@ -53,19 +60,21 @@ rescorrT_dc = rescorr_dc>(max(rescorr_dc(:))*fact3);
 % subplot(1,2,2), imagesc(double(gray_pic)+255*rescorrT_dc);
 % axis image; title('thresh corr'); colorbar;
 %%
-rescorr_ndc = corrdc(gray_pic,pat); %normalized correlation without DC-level
-fact4 = 0.2;
+rescorr_ndc = corrdc(gray_pic,pat2); %normalized correlation without DC-level
+fact4 = 0.3;
 rescorrT_ndc = rescorr_ndc>(max(rescorr_ndc(:))*fact4);
-% 
-% figure
-% colormap(gray(256))
-% axis image; title('pattern'); colorbar;
-% subplot(1,2,1), imagesc(rescorr_ndc);
-% axis image; title('result corr'); colorbar;
-% subplot(1,2,2), imagesc(double(gray_pic)+255*rescorrT_ndc);
-% axis image; title('thresh corr'); colorbar;
+
+figure
+colormap(gray(256))
+axis image; title('pattern'); colorbar;
+subplot(1,2,1), imagesc(rescorr_ndc);
+axis image; title('result corr'); colorbar;
+subplot(1,2,2), imagesc(double(gray_pic)+255*rescorrT_ndc);
+axis image; title('thresh corr'); colorbar;
 
 S = bwmorph(rescorrT_ndc,'shrink',Inf);
+S = imfill(S,'holes');
+S = bwmorph(S,'shrink',Inf);
 sum(sum(S))
 figure
 imagesc(S)

@@ -15,10 +15,10 @@ for j = 1:length(idx)
     y = y + yff;
     y(y == 0) = 1; %Indexeringskäl senare
     x(x == 0) = 1; %Indexeringskäl senare
-%     figure(123), imagesc(im), hold on
-%     plot(x,y)
-%     %plot(xff,yff, 'LineWidth',4)
-%     hold off
+    figure(123), imagesc(im), hold on
+    plot(x,y)
+    %plot(xff,yff, 'LineWidth',4)
+    hold off
     %vals = interp2(ones(10,10),x,y);
     if(length(x(x < 0))~= 0 || length(y(y < 0)) ~= 0 || length(x(x > rows)) || length(y(y > cols)))
         im(xff,yff) = mean(mean(im));
