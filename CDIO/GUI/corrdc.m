@@ -29,8 +29,8 @@ p = p - mean(mean(p));
 
 % Zero-pad pattern
 % ================
-rvec = M/2+1+[-Mp/2:Mp/2-1];
-cvec = N/2+1+[-Np/2:Np/2-1];
+rvec = round(M/2+1+[-Mp/2:Mp/2-1]);
+cvec = round(N/2+1+[-Np/2:Np/2-1]);
 p1 = zeros(M,N);
 p1(rvec,cvec) = p;
 

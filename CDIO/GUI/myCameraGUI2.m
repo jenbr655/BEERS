@@ -23,29 +23,18 @@ end
 function myCameraGUI2_OpeningFcn(hObject, eventdata, handles, varargin)
 handles.output = hObject;
 handles.output = hObject; %BEH�VS DENNA?
-%%%%%%%%%%%%%%%%%%%%%%%%%%%EGET MIKROSKOP%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% clear neostrip;
-% clear a;
-% a=arduino('COM4', 'Uno','Libraries', 'Adafruit/NeoPixel')
-% neostrip=addon(a,'Adafruit/NeoPixel', 'D6', 12)
-% %neostrip.Brightness=0.2;
-% neostrip.Brightness=1;
-% writeColor(neostrip, 1:12, [0, 1, 0]);
-% 
-% cam = videoinput('tisimaq_r2013_64', 1, 'BY8 (1024x768)');
-% src = getselectedsource(cam);
-% cam.FramesPerTrigger = 1;
-% imWidth=640;
-% imHeight=480;
-% axes(handles.cameraAxes);
-% hImage=image(zeros(imHeight,imWidth,3),'Parent',handles.cameraAxes);
-% preview(cam,hImage)
-% DateString = datestr(now, 23);
-% set(handles.dateTimeEdit, 'string',DateString);
+%%%%%%%%%%%%%%%%%%%%%%%%%%EGET MIKROSKOP%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+clear neostrip;
+clear a;
+a=arduino('COM4', 'Uno','Libraries', 'Adafruit/NeoPixel')
+neostrip=addon(a,'Adafruit/NeoPixel', 'D6', 12)
+%neostrip.Brightness=0.2;
+neostrip.Brightness=1;
+writeColor(neostrip, 1:12, [1, 1, 1]);
 
-% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%USB MIKROSKOP%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-cam=webcam('USB 2760 Camera')
-%cam=webcam('USB2.0 Digital Camera')
+cam = videoinput('tisimaq_r2013_64', 1, 'BY8 (1024x768)');
+src = getselectedsource(cam);
+cam.FramesPerTrigger = 1;
 imWidth=640;
 imHeight=480;
 axes(handles.cameraAxes);
@@ -54,6 +43,17 @@ preview(cam,hImage)
 DateString = datestr(now, 23);
 set(handles.dateTimeEdit, 'string',DateString);
 
+% % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%USB MIKROSKOP%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% cam=webcam('USB 2760 Camera')
+% %cam=webcam('USB2.0 Digital Camera')
+% imWidth=640;
+% imHeight=480;
+% axes(handles.cameraAxes);
+% hImage=image(zeros(imHeight,imWidth,3),'Parent',handles.cameraAxes);
+% preview(cam,hImage)
+% DateString = datestr(now, 23);
+% set(handles.dateTimeEdit, 'string',DateString);
+% 
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Update handles structure

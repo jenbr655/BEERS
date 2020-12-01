@@ -1,5 +1,5 @@
 close all
-im = imread('annasnagelband.jpg');
+im = imread('medpol.jpg');
 im = rgb2gray(im);
 im = imresize(im, 0.5);
 im = double(im);

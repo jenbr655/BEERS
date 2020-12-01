@@ -1,5 +1,5 @@
 close all
-I=imread('nagelband2.jpg');
+I=imread('överarm1.jpg');
 J2 = rgb2gray(I);
 J2 = adapthisteq(J2, 'cliplimit', 0.08, 'Distribution','rayleigh');
 J2 = double(J2);
@@ -125,7 +125,7 @@ imshow(J)
 %% JOBB PÅ UNDERARM ISTÄLLET FÖR NAGELBAND
 
 
-A=imread('vesselsunderarm.jpg'); %Samma sak fast för underarm 
+A=imread('överarm1.jpg'); %Samma sak fast för underarm 
 gray_pic_underarm = rgb2gray(A);
 B=adapthisteq(gray_pic_underarm, 'cliplimit', 0.045, 'Distribution','rayleigh');
 
@@ -139,6 +139,18 @@ B(idx3) = 0;
 
 idx4 = find(B > 90);
 B(idx4) = 255;
+
+se = strel('disk',2);
+B = imdilate(B,se);
+
+S = bwmorph(~B,'shrink',Inf);
+S = imfill(S,'holes');
+S = bwmorph(S,'shrink',Inf);
+
+sum(sum(S))
+figure
+imagesc(S)
+
 
 figure(7)
 imshow(B)
