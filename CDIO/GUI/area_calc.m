@@ -1,88 +1,70 @@
+%% Script for calculation of area
 
-function [result, circ]=area_calc(img, zoom) %% Area ber�kning 
+function [result, circ]=area_calc(img, zoom)        %Input is a binary picture and zoom-value
 
-circularity=regionprops(img, 'circularity');
+circularity=regionprops(img, 'circularity');        %Measure circularity in binary picture
 C= struct2cell(circularity);
 A= cell2mat(C);
-circ=A*100; %Circularity in percent
-% circ=circularity/1 %circularity in percent 
+circ=A*100;                                         %Circularity in percent
 
-% Alt som inte funkar �n men skulle kunna anv�nda
-
-%area=regionprops(im, 'Area')
-
-%circularity=regionprops(im, 'EquivDiameter')
-
-% Alt 1, ber�knar arean av pixlar som �r vita men vet inte hur stor en pixel �r 
-
-   
-%tot_area=bwarea(ans); %total area in pixels 
 num_one=[];
-num_one=sum(img(:)==1); %how many ones i matrix
+num_one=sum(img(:)==1);                             %How many ones i matrix
 
-%[x_val y_val]=size(ans); %size of picture
-%tot_num_pix=x_val*y_val;
 
-%num_one_of_tot=num_one/tot_num_pix; %procent of how many pixels that are white
+area_mole=[];
 
-%area_mole=tot_area*num_one_of_tot %area in pixels that are white adding
-%10% due to segmetation
- area_mole=[];
- 
 if zoom==1
-     area_mole=num_one*(1/27)^2; %Calibrated wrt pixels/cm and changed to mm
+    area_mole=num_one*(1/27)^2;                    %Calibrated wrt pixels/cm and changed to mm^2
 end
 
 if zoom==2
-     area_mole=num_one*(1/29)^2; %Calibrated wrt pixels/cm and changed to mm
- end
+    area_mole=num_one*(1/29)^2;                    %Calibrated wrt pixels/cm and changed to mm^2
+end
 
 if zoom==3
-     area_mole=num_one*(1/30)^2; %Calibrated wrt pixels/cm and changed to mm
- end
+    area_mole=num_one*(1/30)^2;                    %Calibrated wrt pixels/cm and changed to mm^2
+end
 
 if zoom==4
-     area_mole=num_one*(1/31)^2; %Calibrated wrt pixels/cm and changed to mm
- end
+    area_mole=num_one*(1/31)^2;                    %Calibrated wrt pixels/cm and changed to mm^2
+end
 
 if zoom==5
-     area_mole=num_one*(1/32)^2; %Calibrated wrt pixels/cm and changed to mm
- end
+    area_mole=num_one*(1/32)^2;                    %Calibrated wrt pixels/cm and changed to mm^2
+end
 
 if zoom==6
-     area_mole=num_one*(1/33)^2; %Calibrated wrt pixels/cm and changed to mm
- end
+    area_mole=num_one*(1/33)^2;                    %Calibrated wrt pixels/cm and changed to mm^2
+end
 
- if zoom==7
-     area_mole=num_one*(1/44)^2; %Calibrated wrt pixels/cm and changed to mm
- end
+if zoom==7
+    area_mole=num_one*(1/44)^2;                    %Calibrated wrt pixels/cm and changed to mm^2
+end
 
 
- if zoom==8
-     area_mole=num_one*(1/46)^2; %Calibrated wrt pixels/cm and changed to mm
- end
+if zoom==8
+    area_mole=num_one*(1/46)^2;                    %Calibrated wrt pixels/cm and changed to mm^2
+end
 
- if zoom==9
-     area_mole=num_one*(1/55)^2; %Calibrated wrt pixels/cm and changed to mm
- end
+if zoom==9
+    area_mole=num_one*(1/55)^2;                    %Calibrated wrt pixels/cm and changed to mm^2
+end
 
- if zoom==9.5
-     area_mole=num_one*(1/87)^2; %Calibrated wrt pixels/cm and changed to mm 
- end
- 
- if zoom==10
-     area_mole=num_one*(1/127)^2; %Calibrated wrt pixels/cm and changed to mm
- end
- 
-result = area_mole;
+if zoom==9.5
+    area_mole=num_one*(1/87)^2;                    %Calibrated wrt pixels/cm and changed to mm^2
+end
 
-  if zoom==0
-   circ='Choose zoom';
-   result='Choose zoom';
-  end
- 
+if zoom==10
+    area_mole=num_one*(1/127)^2;                   %Calibrated wrt pixels/cm and changed to mm^2
+end
+
+result = area_mole;                                %Result is the area of the mole in mm^2
+
+if zoom==0
+    circ='Choose zoom';
+    result='Choose zoom';
+end
 
 end
-%F�r att detta ska fungera beh�ver vi nu veta storleken av en pixel och det
-%beror p� inzoomning osv.
+
 

@@ -1,3 +1,4 @@
+%% Script for segmenting moles
 close all
 im = imread('Snap_003.jpg');
 im = rgb2gray(im);

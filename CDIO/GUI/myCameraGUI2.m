@@ -53,7 +53,7 @@ set(handles.dateTimeEdit, 'string',DateString);
 % preview(cam,hImage)
 % DateString = datestr(now, 23);
 % set(handles.dateTimeEdit, 'string',DateString);
-% 
+
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Update handles structure

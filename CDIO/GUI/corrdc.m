@@ -1,43 +1,29 @@
-function  y = corrdc(f,p)
-% Correlation without DC component: y = corrdc(f,p)
-% f: image 
-% p: pattern
-% y: correlation result
-%
-% The size of the pattern p must be even.
-% The size of the pattern p must be <= the image f.
+%% Script for correlation calculation 
 
-% Convert indata to double
-% ========================
-f = double(f); 
-p = double(p);
+function  y = corrdc(img,pat)                   %Input is an image and a pattern
 
-% Check sizes
-% ===========
-[M,N] = size(f);
-[Mp,Np] = size(p);
+img = double(img);                              %Convert data into double
+pat = double(pat);
+
+[M,N] = size(img);                              %Check size, pattern size must be even
+[Mp,Np] = size(pat);
+
 if mod(Mp,2)== 1 | mod(Np,2)== 1
   error('pattern size must be even')
 end
+
 if (Mp>M) | (Np>N)
   error('pattern size must smaller or equal to image size')
 end
 
-% Remove the DC-level from the pattern
-% ====================================
-p = p - mean(mean(p));
+pat = pat - mean(mean(pat));                    %Remove the mean from the pattern
 
-% Zero-pad pattern
-% ================
-rvec = round(M/2+1+[-Mp/2:Mp/2-1]);
+rvec = round(M/2+1+[-Mp/2:Mp/2-1]);             % Zero-pad pattern
 cvec = round(N/2+1+[-Np/2:Np/2-1]);
 p1 = zeros(M,N);
-p1(rvec,cvec) = p;
+p1(rvec,cvec) = pat;
 
-
-% Correlation in the Fourier domain
-% =================================
-F = fftshift(fft2(ifftshift(f)));
+F = fftshift(fft2(ifftshift(img)));             % Correlation in the Fourier domain
 P = fftshift(fft2(ifftshift(p1)));
 y = real(ifftshift(ifft2(fftshift(F.*conj(P)))));
 

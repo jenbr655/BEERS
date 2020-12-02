@@ -1,0 +1,34 @@
+function  y = corrdc(img,pat)                   
+
+img = double(img);                              %Convert data into double
+pat = double(pat);
+
+% Check sizes
+% ===========
+[M,N] = size(img);
+[Mp,Np] = size(pat);
+if mod(Mp,2)== 1 | mod(Np,2)== 1
+  error('pattern size must be even')
+end
+if (Mp>M) | (Np>N)
+  error('pattern size must smaller or equal to image size')
+end
+
+% Remove the DC-level from the pattern
+% ====================================
+pat = pat - mean(mean(pat));
+
+% Zero-pad pattern
+% ================
+rvec = round(M/2+1+[-Mp/2:Mp/2-1]);
+cvec = round(N/2+1+[-Np/2:Np/2-1]);
+p1 = zeros(M,N);
+p1(rvec,cvec) = pat;
+
+
+% Correlation in the Fourier domain
+% =================================
+F = fftshift(fft2(ifftshift(img)));
+P = fftshift(fft2(ifftshift(p1)));
+y = real(ifftshift(ifft2(fftshift(F.*conj(P)))));
+

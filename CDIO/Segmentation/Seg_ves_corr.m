@@ -1,7 +1,7 @@
 %% Prova kod
 close all
 
-I = imread('underarm1.jpg');
+I = imread('underarm.jpg');
 pic = rgb2gray(I);
 J = adapthisteq(pic, 'cliplimit', 0.08, 'Distribution','rayleigh'); %funktion som gör bättre kontrast
 
